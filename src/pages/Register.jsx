@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect,useState,useRef } from "react"
 import {FaCheck,FaTimes,FaInfoCircle} from 'react-icons/fa'
+import { Link } from "react-router-dom";
 import axios from "../api/axios";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -53,7 +54,7 @@ export default function Register(params) {
         }
         try {
             const response=await axios.post(REGISTER_URL,JSON.stringify({username:user,password1:pwd,password2:matchPwd})
-            ,{headers:{'content-Type':'application/json'},withCredentials:true
+            ,{headers:{'content-Type':'application/json'},
                }
             );
             console.log(response);
@@ -73,7 +74,7 @@ export default function Register(params) {
         {success?   <section>
                     <h1>Success!</h1>
                     <p>
-                        <a href="#">Sign In</a>
+                       <Link to='/login'>sign in</Link>
                     </p>
                 </section>:
           <section>

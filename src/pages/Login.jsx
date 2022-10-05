@@ -1,12 +1,13 @@
 import { useEffect,useState,useRef } from "react"
-import { useLocation,useNavigate } from "react-router-dom"
 import { useAuth } from "../context/contextauth"
 import axios from "../api/axios"
 const Login_url='/auth/login/'
+import { Link,useNavigate,useLocation } from "react-router-dom"
 export default function Login(params) {
     const navigate=useNavigate()
     const Location=useLocation()
-    const from=location.state?.from?.pathname || '/'
+    const from=Location.state?.from?.pathname || '/'
+    console.log(Location);
     const userRef=useRef()
     const errRef=useRef()
     const [user,setUser]=useState('')
@@ -15,7 +16,7 @@ export default function Login(params) {
     const [success,setSuccess]=useState(false)
     const {auth,setAuth}=useAuth()
 
-    console.log(auth);
+
     useEffect(()=>{
        userRef.current.focus()
     },[])
@@ -28,11 +29,12 @@ export default function Login(params) {
             const response=await axios.post(Login_url,JSON.stringify({username:user,password:pwd}),{ headers:{'content-Type':'application/json'}
             })
             setSuccess(true)
-            console.log(response);
+
             const accessToken = response?.data?.access_token;
-            const roles = response?.data?.roles;
-            setAuth({pwd,user,accessToken})
-            navigate(from,{replace:true})
+            const roles = response?.data?.user?.role;
+            setAuth({pwd,user,accessToken,roles})
+            navigate(from, { replace: true });
+
         } catch (error) {
             if (!error?.response) {
                 
@@ -78,6 +80,8 @@ export default function Login(params) {
             />
             <button>Login</button>
             </form>
+            don't have an account?<br/>
+            <Link to='/register'>sign up</Link>
         </section>
     )
 }

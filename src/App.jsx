@@ -27,11 +27,16 @@ function App() {
 
       {/* we want to protect these routes */}      
 
-      <Route element={<RequireAuth />}>
+      <Route element={<RequireAuth allowedRoles={['2344']} />}>
       <Route path="editor" element={<Editor />} />
+      </Route>
+      <Route element={<RequireAuth allowedRoles={['4000']} />}>
       <Route path="admin" element={<Admin />} />
+      </Route>
+      <Route element={<RequireAuth allowedRoles={['2005']} />}>
       <Route path="lounge" element={<Lounge />} />
       </Route>
+
      
       {/* catch all */}
       <Route path="*" element={<Missing />} />
