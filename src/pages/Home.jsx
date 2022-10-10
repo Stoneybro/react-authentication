@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/contextauth"
 
+import Logout from "../Hooks/useLogout"
 const Home = () => {
     const {auth} =useAuth()
 
-    const logout = async () => {
+    const logout=Logout()
+    const Signout = async () => {
         // if used in more components, this should be in context 
         // axios to /logout endpoint 
-
+        await logout()
+        
     }
 
     return (

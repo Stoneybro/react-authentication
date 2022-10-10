@@ -111,9 +111,7 @@ export default function Register(params) {
               <input type="password"
               aria-describedby="password"
               aria-invalid={validPwd?'false':'true'}
-          
               id='password'
-
               onChange={(e)=>setPwd(e.target.value)}
               value={pwd}
               required

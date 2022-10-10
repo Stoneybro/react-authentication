@@ -7,7 +7,7 @@ export default function Login(params) {
     const navigate=useNavigate()
     const Location=useLocation()
     const from=Location.state?.from?.pathname || '/'
-    console.log(Location);
+
     const userRef=useRef()
     const errRef=useRef()
     const [user,setUser]=useState('')
@@ -26,15 +26,14 @@ export default function Login(params) {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            const response=await axios.post(Login_url,JSON.stringify({username:user,password:pwd}),{ headers:{'content-Type':'application/json'}
-            })
+            const response=await axios.post(Login_url,JSON.stringify({username:user,password:pwd}),{headers:{'content-Type':'application/json'} })
             setSuccess(true)
 
             const accessToken = response?.data?.access_token;
+            const refreshToken=response?.data?.refresh_token
             const roles = response?.data?.user?.role;
-            setAuth({pwd,user,accessToken,roles})
+            setAuth({user,accessToken,roles})
             navigate(from, { replace: true });
-
         } catch (error) {
             if (!error?.response) {
                 
